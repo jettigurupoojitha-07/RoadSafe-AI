@@ -1,0 +1,127 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #e0f2fe, #eef2ff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.container {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+h1 {
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 28px;
+}
+
+.container > p:first-of-type {
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: bold;
+    color: #334155;
+    margin-top: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+input:focus, select:focus {
+    outline: 2px solid #93c5fd;
+    border-color: #2563eb;
+}
+
+button {
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.note {
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 22px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+}
+
+.result {
+    margin-top: 24px;
+    padding: 18px;
+    border-radius: 10px;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    color: #1b5e20;
+}
+
+.result h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+}
+
+.result p {
+    margin: 0;
+    font-size: 17px;
+}
+
+.error {
+    margin-top: 20px;
+    padding: 14px;
+    background: #ffebee;
+    color: #b71c1c;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}

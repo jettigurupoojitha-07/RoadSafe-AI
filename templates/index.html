@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadSafe AI - Accident Severity and Visibility Risk Assessment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>RoadSafe AI</h1>
+        <p>Accident Severity Prediction and Low-Visibility Risk Assessment</p>
+
+        <form action="/" method="POST">
+            <label for="weather">Weather Conditions</label>
+            <select id="weather" name="weather" required>
+                <option value="">Select weather</option>
+                <option value="Normal">Normal</option>
+                <option value="Raining">Raining</option>
+                <option value="Cloudy">Cloudy</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="road_surface">Road Surface Conditions</label>
+            <select id="road_surface" name="road_surface" required>
+                <option value="">Select road condition</option>
+                <option value="Dry">Dry</option>
+                <option value="Wet or damp">Wet or damp</option>
+                <option value="Snow">Snow</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="light_conditions">Light Conditions</label>
+            <select id="light_conditions" name="light_conditions" required>
+                <option value="">Select light condition</option>
+                <option value="Daylight">Daylight</option>
+                <option value="Darkness - lights lit">Darkness - lights lit</option>
+                <option value="Darkness - no lighting">Darkness - no lighting</option>
+            </select>
+
+            <label for="visibility">Reported Visibility</label>
+            <select id="visibility" name="visibility" required>
+                <option value="" selected disabled>Select visibility</option>
+                <option value="Good">Good</option>
+                <option value="Low">Low</option>
+                <option value="Very low">Very low</option>
+            </select>
+
+            
+
+
+            <label for="vehicles">Number of Vehicles Involved</label>
+            <input id="vehicles" name="vehicles" type="number"
+                   min="1" max="20" required>
+
+            <button type="submit">Assess Severity</button>
+        </form>
+        <hr>
+
+        <h2>Road Image Visibility Analysis</h2>
+        <p>Upload a road image to check for signs of reduced image contrast.</p>
+
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="road_image">Upload Road Image</label>
+            <input
+                type="file"
+                id="road_image"
+                name="road_image"
+                accept=".png,.jpg,.jpeg"
+                required
+            >
+            <button type="submit">Analyze Road Image</button>
+        </form>
+
+        {% if fog_result %}
+            <div class="result">
+                <h2>Image Visibility Result: {{ fog_result.level }}</h2>
+                <p>{{ fog_result.message }}</p>
+                <p>Image contrast: {{ fog_result.contrast }}</p>
+                <p>Edge density: {{ fog_result.edge_density }}</p>
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' ~ fog_result.image_url) }}"
+                    alt="Uploaded road image"
+                    style="max-width: 100%; border-radius: 8px;"
+                >
+
+                <p>
+                    This is a preliminary image-quality heuristic,
+                    not a validated fog detector or a guarantee of road safety.
+                </p>
+            </div>
+        {% endif %}
+
+
+        
+            {% if risk_level %}
+                    <div class="result">
+                        <h2>Low-Visibility Risk: {{ risk_level }}</h2>
+
+                        <h3>Contributing conditions</h3>
+                        <ul>
+                            {% for reason in risk_reasons %}
+                                <li>{{ reason }}</li>
+                            {% else %}
+                                <li>No additional risk factors identified by these rules.</li>
+                            {% endfor %}
+                        </ul>
+
+                        <h3>Safety recommendations</h3>
+                        <ul>
+                            {% for item in recommendations %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if prediction %}
+                    <div class="result">
+                        <h2>Predicted Accident Severity</h2>
+                        <p>{{ prediction }}</p>
+                    </div>
+                {% endif %}
+
+                {% if error %}
+                    <div class="result">
+                        <h3>Assessment error</h3>
+                        <p>{{ error }}</p>
+                    </div>
+                {% endif %}
+
+
+        <p class="note">
+            This system provides an estimate based on historical accident data.
+        </p>
+    </div>
+</body>
+</html>
